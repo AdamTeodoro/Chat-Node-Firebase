@@ -1,0 +1,12 @@
+.caixa-msgs{
+    border: 0.3px solid #aaaaaa;
+    height: 300px; 
+    border-radius: 5px;
+    overflow:scroll;
+    width:100%;
+    overflow:auto;
+}
+.msg{
+    font-size: 12pt;
+    color: #555555;
+}

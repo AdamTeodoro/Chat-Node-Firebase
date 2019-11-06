@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <form id="chat">
+        <div style="width: 80%; margin-left: 10px;">
+            <h2>Digite um nome para acessar o chat!</h2>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">Nome do seu usuário:</span>
+                </div>
+                <input id="nome" type="text" autocomplete="off"  name="nome" class="form-control" placeholder="Digite seu nome" aria-label="Username" aria-describedby="basic-addon1">
+            </div>
+            <div class="caixa-msgs">
+            </div>
+            <div class="input-group">
+                <input id="mensagem" placeholder="Envie uma mensagem!" autocomplete="off"  name="mensagem" class="form-control" aria-label="With textarea">
+            </div>
+            <button style="width: 200px; height: 50px; border:none;background-color:  black; color: white;"><b>Enviar</b></button>
+        </div>
+    </form>
+    <script type="text/javascript">
+        var socket = io('http://localhost:3000');
+
+        function carregaMSG(msg){
+            $('.caixa-msgs').append('<content> <div class="msg"><b>' + msg.usuario + '</b> -> ' + msg.mensagem +'</div></content>');
+        }
+
+        socket.on('historicoMsg',(msgs)=>{
+            for(let i = 0; i < msgs.length; i++){
+                let msg = msgs[i];
+                carregaMSG(msg)
+            }
+        });
+
+        socket.on('obtevemsg',(msg)=>{
+            carregaMSG(msg);
+        } );
+
+        $('#chat').submit(function (event){
+            event.preventDefault();
+
+            var usuario = $('input[name=nome]').val();
+            var mensagem = $('input[name=mensagem]').val();
+            
+            if(usuario.length && mensagem.length){
+                var msgJson = {
+                    usuario: usuario,
+                    mensagem: mensagem,
+                };
+                carregaMSG(msgJson);
+                socket.emit('msg', msgJson );
+
+                document.getElementById('mensagem').value = "";
+            }
+
+
+        });
+    </script>
+</body>
+</html>

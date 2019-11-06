@@ -1,0 +1,26 @@
+{
+  "name": "chat",
+  "version": "1.0.0",
+  "description": "chat para trabalho de disciplina sistemas distribuidos",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "chat-sistemas-distribuidos"
+  ],
+  "author": "Adam Teodoro Nunes da  Silva",
+  "license": "MPL-2.0",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "debug": "^4.1.1",
+    "dotenv": "^8.2.0",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "firebase": "^7.2.3",
+    "http": "0.0.0",
+    "restify": "^8.4.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {}
+}
